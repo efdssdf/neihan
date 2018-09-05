@@ -36,7 +36,7 @@ MONGO_PSW = "liujiazhi88"
 # 数据库名称
 MONGODB_DBNAME = "mingxingshuo_gif"
 # 存放数据的表名称
-MONGODB_NEIHANNAME = "neihan"
+MONGODB_NEIHANNAME = "neihans"
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
