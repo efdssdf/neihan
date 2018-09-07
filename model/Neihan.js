@@ -8,7 +8,8 @@ var NeihanSchema = new Schema({
     title: String,
     thumbnail: String,
     createAt: Number,
-    source:String
+    source:String,
+    count:Number
 });
 
 
