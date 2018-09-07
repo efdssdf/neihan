@@ -7,7 +7,8 @@ var db = mongoose.createConnection(connect_url);
 var NeihanSchema = new Schema({
     title: String,
     thumbnail: String,
-    createAt: Number
+    createAt: Number,
+    source:String
 });
 
 
