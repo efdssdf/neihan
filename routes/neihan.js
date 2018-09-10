@@ -1,5 +1,6 @@
 const router = require('koa-router')()
 var NeihanModel = require('../model/Neihan');
+var version = require('../conf/proj.json').version;
 
 router.prefix('/neihan');
 
@@ -22,7 +23,7 @@ router.get('/', async(ctx, next) => {
             var messages = await NeihanModel.find({source: "neihan"}).skip((page - 1) * 20).limit(20).sort({createAt: -1});
         }
     }
-    ctx.body = {messages: messages}
+    ctx.body = {messages: messages,version:version}
 })
 
 module.exports = router
