@@ -5,7 +5,7 @@ router.prefix('/neihan');
 
 router.get('/', async(ctx, next) => {
     let page = ctx.request.query.page || 1
-    let id = ctx.request.query.id || 0
+    let id = ctx.request.query.id
     let type = ctx.request.query.type || ""
     if (type && type == "share") {
         let messages = await NeihanModel.find({
@@ -13,10 +13,14 @@ router.get('/', async(ctx, next) => {
             source: "neihan"
         }).skip((page - 1) * 20).limit(20).sort({createAt: -1});
     } else {
-        let messages = await NeihanModel.find({
-            _id: {$gt: id},
-            source: "neihan"
-        }).skip((page - 1) * 20).limit(20).sort({createAt: -1});
+        if (id) {
+            let messages = await NeihanModel.find({
+                _id: {$gt: id},
+                source: "neihan"
+            }).skip((page - 1) * 20).limit(20).sort({createAt: -1});
+        } else {
+            let messages = await NeihanModel.find({source: "neihan"}).skip((page - 1) * 20).limit(20).sort({createAt: -1});
+        }
     }
     ctx.body = {messages: messages}
 })
