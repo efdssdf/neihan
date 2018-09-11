@@ -8,37 +8,26 @@ router.get('/', async(ctx, next) => {
     let id = ctx.request.query.id
     let type = ctx.request.query.type || ""
     let arr = [];
-    if (type && type == "share") {
-        var messages = await NeihanModel.find({
-            _id: {$gte: id},
-            source: "neihan"
-        }).skip((page - 1) * 20).limit(20).sort({createAt: -1});
-        for(var message of messages){
+    if (id && type && type == "share") {
+        var share_message = await NeihanModel.find({_id: id, source: "neihan"});
+        let res = JSON.parse(JSON.stringify(share_message));
+        res[0].page = page
+        arr.push(res[0])
+        var messages = await NeihanModel.find({source: "neihan"}).skip((page - 1) * 20).limit(20).sort({createAt: -1});
+        for (var message of messages) {
             let res = JSON.parse(JSON.stringify(message));
             res.page = page
             arr.push(res)
         }
     } else {
-        if (id) {
-            var messages = await NeihanModel.find({
-                _id: {$gt: id},
-                source: "neihan"
-            }).skip((page - 1) * 20).limit(20).sort({createAt: -1});
-            for(var message of messages){
-                let res = JSON.parse(JSON.stringify(message));
-                res.page = page
-                arr.push(res)
-            }
-        } else {
-            var messages = await NeihanModel.find({source: "neihan"}).skip((page - 1) * 20).limit(20).sort({createAt: -1});
-            for(var message of messages){
-                let res = JSON.parse(JSON.stringify(message));
-                res.page = page
-                arr.push(res)
-            }
+        var messages = await NeihanModel.find({source: "neihan"}).skip((page - 1) * 20).limit(20).sort({createAt: -1});
+        for (var message of messages) {
+            let res = JSON.parse(JSON.stringify(message));
+            res.page = page
+            arr.push(res)
         }
     }
-    ctx.body = {messages: arr,version:"1.0.0"}
+    ctx.body = {messages: arr, version: "1.0.1"}
 })
 
 module.exports = router
