@@ -13,7 +13,7 @@ async function filter() {
 }
 
 var rule = new schedule.RecurrenceRule();
-var times = [20];
+var times = [12];
 rule.hour = times;
 var j = schedule.scheduleJob(rule, function () {
     console.log('过滤图片');
