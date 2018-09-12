@@ -13,20 +13,24 @@ var sleep = function (time) {
 async function filter() {
     let messages = await NeihanModel.find({"source": "gaoxiaogif"})
     for (var i of messages) {
-        console.log(i.thumbnail,'-------')
         http.get(i.thumbnail, function (response) {
             var chunks = [];
             response.on('data', function (chunk) {
                 chunks.push(chunk);
             }).on('end', async function () {
                 var buffer = Buffer.concat(chunks);
-                if (sizeOf(buffer).width < 320) {
-                    console.log(sizeOf(buffer).width,'------------')
+                console.log(sizeOf(buffer).width, '----------------1')
+                if (buffer && sizeOf(buffer).width < 320) {
+                    console.log(sizeOf(buffer).width, '----------------')
                     await NeihanModel.findByIdAndDelete(i._id)
                 }
             });
+        }).setTimeout(10000, async function(){
+            console.log('-----------Timeout')
+            // await NeihanModel.findByIdAndDelete(i._id)
         });
-        await sleep(200)
+        await sleep(2000)
     }
+    return;
 }
 filter()
