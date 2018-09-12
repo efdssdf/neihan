@@ -8,15 +8,17 @@ router.get('/', async(ctx, next) => {
     let id = ctx.request.query.id
     let type = ctx.request.query.type || ""
     let arr = [];
-    let arrSource = ["neihan","gaoxiaogif"];
+    let soureArr = ["neihan","gaoxiaogif"]
     if (id && type && type == "share") {
         var share_message = await NeihanModel.find({_id: id, source: "neihan"});
         let res = JSON.parse(JSON.stringify(share_message));
+        res[0].page = page
         arr.push(res[0])
     }
-    var messages = await NeihanModel.find({source: {$in:arrSource}}).skip((page - 1) * 20).limit(20).sort({createAt: 1});
+    var messages = await NeihanModel.find({source: {$in:soureArr}}).skip((page - 1) * 20).limit(20).sort({createAt: 1});
     for (var message of messages) {
         let res = JSON.parse(JSON.stringify(message));
+        res.page = page
         arr.push(res)
     }
     ctx.body = {messages: arr, version: "1.0.1"}
