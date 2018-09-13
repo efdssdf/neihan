@@ -8,7 +8,7 @@ router.get('/', async(ctx, next) => {
     let id = ctx.request.query.id
     let type = ctx.request.query.type || ""
     let arr = [];
-    let soureArr = ["neihan","gaoxiaogif"]
+    let soureArr = ["neihan","gaoxiaogif","jiefu"]
     if (id && type && type == "share") {
         var share_message = await NeihanModel.find({_id: id, source: "neihan"});
         let res = JSON.parse(JSON.stringify(share_message));
