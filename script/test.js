@@ -1,8 +1,7 @@
 var NeihanModel = require('../model/Neihan');
-var koa2Req = require('koa2-request');
 var http = require('http');
+var koa2Req = require('koa2-request');
 var sizeOf = require('image-size');
-var schedule = require("node-schedule");
 var async = require('async');
 
 var sleep = function (time) {
@@ -16,8 +15,8 @@ var sleep = function (time) {
 async function filter() {
     let arrSource = ["neihan", "gaoxiaogif", "jiefu"];
     let delArr = []
-    // let messages = await NeihanModel.find({"source": "gaoxiaogif"})
-    let messages = await NeihanModel.find({source: {$in: arrSource}, createAt: {$gte: Date.now() / 1000 - 2 * 3600}})
+    let messages = await NeihanModel.find({"source": "gaoxiaogif"})
+    // let messages = await NeihanModel.find({source: {$in: arrSource}, createAt: {$gte: Date.now() / 1000 - 2 * 3600}})
     async.eachLimit(messages, 1, async function (message, callback) {
         if (message.source == "neihan") {
             var res = await koa2Req(message.thumbnail)
@@ -58,11 +57,21 @@ async function filter() {
         })
     })
 }
-
-var rule = new schedule.RecurrenceRule();
-var times = [20];
-rule.hour = times;
-var j = schedule.scheduleJob(rule, async function () {
-    console.log('过滤图片');
-    await filter()
-});
+async function del() {
+    let messages = await NeihanModel.find({"source": "jiefu"})
+    var arr = []
+    async.eachLimit(messages, 1, function (message, callback) {
+        if (message.thumbnail.indexOf('gif') != -1) {
+            // console.log(message.thumbnail,'------------------------------')
+            arr.push(message._id)
+        }
+        callback(null)
+    }, function (err) {
+        console.log(arr.length, '--------------------')
+        // NeihanModel.remove({_id: {$in: arr}}, function (err, data) {
+        //     console.log(data)
+        // })
+    })
+}
+filter()
+// del()
