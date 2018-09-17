@@ -27,9 +27,9 @@ async function getOpenid(code, wxcode) {
     return openid
 }
 
-async function sendTemplateMessage(code, openid, formid, page, values) {
+async function sendTemplateMessage(code,templateCode, openid, formid, page, values) {
     let token = await getAccessToken(code)
-    let temp_conf = template_conf[code]
+    let temp_conf = template_conf[templateCode]
     let url = 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' + token
     let data = {
         access_token: token,
