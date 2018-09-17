@@ -19,6 +19,7 @@ router.post('/form', async(ctx, next) => {
             }
         }
     })
+    res.send({})
 });
 
 router.get('/send', async(ctx, next) => {
@@ -37,6 +38,7 @@ router.get('/send', async(ctx, next) => {
             }
         }
     }
+    res.send({})
 })
 
 module.exports = router

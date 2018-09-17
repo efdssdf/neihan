@@ -21,7 +21,8 @@ router.get('/', async(ctx, next) => {
         res.page = page
         arr.push(res)
     }
-    ctx.body = {messages: arr, version: "1.0.1"}
+    arr.
+    ctx.body = {messages: arr,length:arr.length, version: "1.0.1"}
 })
 
 module.exports = router
