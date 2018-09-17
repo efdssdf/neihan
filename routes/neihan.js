@@ -21,7 +21,6 @@ router.get('/', async(ctx, next) => {
         res.page = page
         arr.push(res)
     }
-    arr.
     ctx.body = {messages: arr,length:arr.length, version: "1.0.1"}
 })
 
