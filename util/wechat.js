@@ -21,9 +21,12 @@ async function getAccessToken(code) {
 async function getOpenid(code, wxcode) {
     let conf = weichat_conf[code];
     let url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + conf.appid + "&secret=" + conf.appsecret + "&code=" + wxcode + "&grant_type=authorization_code"
+    console.log(url,'------------------url')
     let res = await koa2Req(url)
+    console.log(res,'------------------res')
     let data = JSON.parse(res.body)
     let openid = data.openid
+    console.log(data,openid,'-------------------------')
     return openid
 }
 
