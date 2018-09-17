@@ -1,7 +1,6 @@
 const router = require('koa-router')()
 var mem = require('../util/mem')
 var wechat = require('../util/wechat')
-let weichat_conf = require('../conf/weichat.json');
 var UserModel = require('../model/User');
 
 router.prefix('/template');

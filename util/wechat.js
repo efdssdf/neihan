@@ -1,6 +1,6 @@
 let koa2Req = require('koa2-request');
 let mem = require('./mem');
-let weichat_conf = require('../conf/weichat.json');
+let weichat_conf = require('../conf/wechat.json');
 let template_conf = require('../conf/template.json');
 
 async function getAccessToken(code) {
