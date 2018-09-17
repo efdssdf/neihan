@@ -7,6 +7,7 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger') 
 
 const neihan = require('./routes/neihan')
+const template = require('./routes/template')
 
 // error handler
 onerror(app)
@@ -44,6 +45,7 @@ app.use(async (ctx, next) => {
 
 // routes
 app.use(neihan.routes(), neihan.allowedMethods())
+app.use(template.routes(), template.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
