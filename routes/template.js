@@ -9,7 +9,6 @@ router.post('/form', async(ctx, next) => {
     let code = ctx.request.body.code || "1"
     let wxcode = ctx.request.body.wxcode
     let formid = ctx.request.body.formid
-    console.log(formid, '-----------------------------formid')
     let openid = await wechat.getOpenid(code, wxcode)
     await UserModel.findOneAndUpdate({openid: openid, code: code}, {
         $addToSet: {
@@ -26,7 +25,7 @@ router.get('/send', async(ctx, next) => {
     let code = ctx.request.query.code || "1"
     let templateCode = ctx.request.query.templateCode || "1"
     let page = ctx.request.query.page
-    let values = ctx.request.query.values
+    let values = JSON.parse(ctx.request.query.values)
     let users = await UserModel.find({code: code});
     for (let user of users) {
         for (let formid of user.formIds) {
