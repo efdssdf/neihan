@@ -25,7 +25,7 @@ async function getOpenid(code, wxcode) {
     let res = await koa2Req(url)
     console.log(res,'------------------res')
     let data = JSON.parse(res.body)
-    let openid = data.openid
+    let openid = data.req_id
     console.log(data,openid,'-------------------------')
     return openid
 }
