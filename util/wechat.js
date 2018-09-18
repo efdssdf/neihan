@@ -35,6 +35,7 @@ async function sendTemplateMessage(code, templateCode, openid, formid, page, val
     let token = await getAccessToken(code)
     let temp_conf = template_conf[templateCode]
     let url = 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' + token
+    console.log(url,'--------------------------url')
     let data = {
         access_token: token,
         touser: openid,
@@ -43,6 +44,7 @@ async function sendTemplateMessage(code, templateCode, openid, formid, page, val
         page: page,
         data: values
     }
+    console.log(data,'--------------------------data')
     let res = await koa2Req.post({url: url, form: data})
 }
 
