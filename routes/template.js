@@ -47,7 +47,7 @@ router.get('/send', async(ctx, next) => {
     let users = await UserModel.find({code: code});
     for (let user of users) {
         for (let formid of user.formIds) {
-            if (Date.now() - formid.createAt < 7 * 24 * 1000) {
+            if (Date.now() - formid.createAt < 7 * 24 * 3600 * 1000) {
                 await wechat.sendTemplateMessage(code, templateCode, user.openid, formid.formid, page, values)
                 await UserModel.update({openid: user.openid, code: code}, {$pull: {formIds: {formid: formid}}})
                 break
