@@ -14,7 +14,6 @@ router.get('/openid', async(ctx, next) => {
     if (message.openid) {
         openid = message.openid
     } else {
-        console.log(wxcode,'--------------------------')
         openid = await wechat.getOpenid(code, wxcode)
         if (!openid) {
             status = -1
