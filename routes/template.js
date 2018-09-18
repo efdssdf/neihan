@@ -46,13 +46,14 @@ router.get('/send', async(ctx, next) => {
     let values = JSON.parse(ctx.request.query.values)
     let users = await UserModel.find({code: code});
     for (let user of users) {
-        for (let formid of user.formIds) {
+        let arr = user.formIds.sort('createAt',-1)
+        for (let formid of arr) {
             if (Date.now() - formid.createAt < 7 * 24 * 3600 * 1000) {
                 await wechat.sendTemplateMessage(code, templateCode, user.openid, formid.formid, page, values)
-                await UserModel.update({openid: user.openid, code: code}, {$pull: {formIds: {formid: formid}}})
+                // await UserModel.update({openid: user.openid, code: code}, {$pull: {formIds: formid}})
                 break
             } else {
-                await UserModel.update({openid: user.openid, code: code}, {$pull: {formIds: {formid: formid}}})
+                // await UserModel.update({openid: user.openid, code: code}, {$pull: {formIds: formid}})
             }
         }
     }
