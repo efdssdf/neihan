@@ -42,7 +42,7 @@ router.post('/form', async(ctx, next) => {
 router.get('/send', async(ctx, next) => {
     let code = ctx.request.query.code || "1"
     let templateCode = ctx.request.query.templateCode || "1"
-    let page = ctx.request.query.page
+    let page = ctx.request.query.path
     let values = JSON.parse(ctx.request.query.values)
     let users = await UserModel.find({code: code});
     for (let user of users) {
