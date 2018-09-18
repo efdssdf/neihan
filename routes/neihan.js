@@ -23,9 +23,9 @@ router.get('/', async(ctx, next) => {
             res.page = page
             arr.push(res)
         }
-        // arr.splice(4,0,ad.ad1)
-        // arr.splice(11,0,ad.ad2)
-        // arr.splice(18,0,ad.ad3)
+        arr.splice(4,0,ad.ad1)
+        arr.splice(11,0,ad.ad2)
+        arr.splice(18,0,ad.ad3)
     }else{
         for (var message of messages) {
             let res = JSON.parse(JSON.stringify(message));
@@ -34,7 +34,7 @@ router.get('/', async(ctx, next) => {
         }
         arr.code = "end"
     }
-    ctx.body = {messages: arr,code:arr.code, version: "1.0.1"}
+    ctx.body = {messages: arr,code:arr.code, version: "1.0.2"}
 })
 
 
@@ -68,7 +68,7 @@ router.get('/test', async(ctx, next) => {
         }
         arr.code = "end"
     }
-    ctx.body = {messages: arr,code:arr.code, version: "1.0.1"}
+    ctx.body = {messages: arr,code:arr.code, version: "1.0.2"}
 })
 
 module.exports = router
