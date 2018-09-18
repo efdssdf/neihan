@@ -6,14 +6,15 @@ var UserModel = require('../model/User');
 router.prefix('/template');
 
 router.get('/openid', async(ctx, next) => {
-    let code = ctx.request.body.code || "1"
-    let wxcode = ctx.request.body.wxcode
+    let code = ctx.request.query.code || "1"
+    let wxcode = ctx.request.query.wxcode
     let openid = ""
     let status = 0
     let message = await UserModel.find({wxcode: wxcode})
     if (message.openid) {
         openid = message.openid
     } else {
+        console.log(wxcode,'--------------------------')
         openid = await wechat.getOpenid(code, wxcode)
         if (!openid) {
             status = -1
