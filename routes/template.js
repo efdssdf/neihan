@@ -10,7 +10,7 @@ router.post('/form', async(ctx, next) => {
     let wxcode = ctx.request.body.wxcode
     let formid = ctx.request.body.formid
     let openid = await wechat.getOpenid(code, wxcode)
-    console.log(wxcode,formid,openid,'------------------------------')
+    console.log(code,wxcode,formid,openid,'------------------------------code')
     await UserModel.update({openid: openid, code: code}, {
         $addToSet: {
             formIds: {
