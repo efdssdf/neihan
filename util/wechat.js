@@ -37,12 +37,12 @@ async function sendTemplateMessage(code, templateCode, openid, formid, page, val
     let url = 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' + token
     console.log(url,'--------------------------url')
     let data = {
-        access_token: token,
-        touser: openid,
-        template_id: temp_conf.template_id,
-        form_id: formid,
-        page: page,
-        data: values
+        "touser": openid,
+        "template_id": temp_conf.template_id,
+        "form_id": formid,
+        "page": page,
+        "data": values,
+        "emphasis_keyword":"keyword1.DATA"
     }
     console.log(data,'--------------------------data')
     let res = await koa2Req.post({url: url, form: data})
