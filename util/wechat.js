@@ -42,7 +42,7 @@ async function sendTemplateMessage(code, templateCode, openid, formid, page, val
         "form_id": formid,
         "page": page,
         "data": values,
-        "emphasis_keyword":"keyword1.DATA"
+        "emphasis_keyword":"keyword2.DATA"
     }
     await request.post(url).send(data).end()
     return null
