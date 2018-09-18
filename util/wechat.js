@@ -2,6 +2,7 @@ let koa2Req = require('koa2-request');
 let mem = require('./mem');
 let weichat_conf = require('../conf/wechat.json');
 let template_conf = require('../conf/template.json');
+var UserModel = require('../model/User');
 
 async function getAccessToken(code) {
     let token = await mem.get('mp_access_token_' + code);
@@ -21,11 +22,12 @@ async function getAccessToken(code) {
 async function getOpenid(code, wxcode) {
     let conf = weichat_conf[code];
     let url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + conf.appid + "&secret=" + conf.appsecret + "&js_code=" + wxcode + "&grant_type=authorization_code"
-    console.log(url,'------------------url')
     let res = await koa2Req(url)
     let data = JSON.parse(res.body)
     let openid = data.openid
-    console.log(data,openid,'-------------------------')
+    if(openid){
+        await UserModel.update({openid:openid},{code: wxcode})
+    }
     return openid
 }
 

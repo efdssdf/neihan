@@ -5,21 +5,35 @@ var UserModel = require('../model/User');
 
 router.prefix('/template');
 
-router.post('/form', async(ctx, next) => {
+router.post('/openid', async(ctx, next) => {
     let code = ctx.request.body.code || "1"
     let wxcode = ctx.request.body.wxcode
+    let openid = ""
+    let status = 0
+    let message = await UserModel.find({code: wxcode})
+    if (message.openid) {
+        openid = message.openid
+    } else {
+        openid = await wechat.getOpenid(code, wxcode)
+        if (!openid) {
+            status = -1
+        }
+    }
+    ctx.body = {openid: openid, status: status}
+})
+
+router.post('/form', async(ctx, next) => {
+    let openid = ctx.request.body.openid
     let formid = ctx.request.body.formid
-    let openid = await wechat.getOpenid(code, wxcode)
-    console.log(code, wxcode, formid, openid, '------------------------------code')
     if (openid) {
-        await UserModel.update({openid: openid, code: code}, {
+        await UserModel.update({openid: openid}, {
                 $addToSet: {
                     formIds: {
                         formid: formid,
                         createAt: Date.now()
                     }
                 }
-            }, {upsert: true}
+            }
         )
     }
     ctx.body = {}
