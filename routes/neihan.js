@@ -68,7 +68,7 @@ router.get('/test', async(ctx, next) => {
         }
         arr.code = "end"
     }
-    ctx.body = {messages: arr,code:arr.code, version: "1.0.2"}
+    ctx.body = {messages: arr,code:arr.code, version: "1.0.1"}
 })
 
 module.exports = router
