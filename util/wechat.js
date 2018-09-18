@@ -25,13 +25,13 @@ async function getOpenid(code, wxcode) {
     let res = await koa2Req(url)
     let data = JSON.parse(res.body)
     let openid = data.openid
-    if(openid){
-        await UserModel.update({openid:openid},{wxcode: wxcode})
+    if (openid) {
+        await UserModel.update({openid: openid}, {code: code, wxcode: wxcode})
     }
     return openid
 }
 
-async function sendTemplateMessage(code,templateCode, openid, formid, page, values) {
+async function sendTemplateMessage(code, templateCode, openid, formid, page, values) {
     let token = await getAccessToken(code)
     let temp_conf = template_conf[templateCode]
     let url = 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' + token
