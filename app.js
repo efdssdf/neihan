@@ -28,7 +28,7 @@ app.use(views(__dirname + '/views', {
 
 app.use(async (ctx, next) => {
   ctx.set('Access-Control-Allow-Headers', 'content-type,xfilecategory,xfilename,xfilesize');
-	ctx.set('Access-Control-Allow-Origin', 'http://localhost:8080');
+	ctx.set('Access-Control-Allow-Origin', 'http://www.rrdtjj.top');
 	ctx.set('Access-Control-Allow-Credentials', 'true');
   ctx.set('Access-Control-Allow-Methods', 'PUT,DELETE,POST,GET,OPTIONS');
   if (ctx.request.method == "OPTIONS") {
