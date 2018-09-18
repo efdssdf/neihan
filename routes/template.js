@@ -10,7 +10,7 @@ router.post('/openid', async(ctx, next) => {
     let wxcode = ctx.request.body.wxcode
     let openid = ""
     let status = 0
-    let message = await UserModel.find({code: wxcode})
+    let message = await UserModel.find({wxcode: wxcode})
     if (message.openid) {
         openid = message.openid
     } else {

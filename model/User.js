@@ -6,6 +6,7 @@ var db = mongoose.createConnection(connect_url);
 
 var UserSchema = new Schema({
     openid: String,
+    wxcode:String,
     code:String,
     formIds:Array
 });

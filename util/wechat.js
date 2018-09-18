@@ -26,7 +26,7 @@ async function getOpenid(code, wxcode) {
     let data = JSON.parse(res.body)
     let openid = data.openid
     if(openid){
-        await UserModel.update({openid:openid},{code: wxcode})
+        await UserModel.update({openid:openid},{wxcode: wxcode})
     }
     return openid
 }
