@@ -1,8 +1,9 @@
-let koa2Req = require('koa2-request');
-let mem = require('./mem');
-let weichat_conf = require('../conf/wechat.json');
-let template_conf = require('../conf/template.json');
-var UserModel = require('../model/User');
+const koa2Req = require('koa2-request');
+const mem = require('./mem');
+const weichat_conf = require('../conf/wechat.json');
+const template_conf = require('../conf/template.json');
+const UserModel = require('../model/User');
+const request = require('superagent');
 
 async function getAccessToken(code) {
     // let token = await mem.get('mp_access_token_' + code);
@@ -45,7 +46,8 @@ async function sendTemplateMessage(code, templateCode, openid, formid, page, val
         "emphasis_keyword":"keyword1.DATA"
     }
     console.log(data,'--------------------------data')
-    let res = await koa2Req.post({url: url, data: data})
+    // let res = await koa2Req.post({url: url, data: data})
+    request.post(url).query(data).end((err, res) => {console.log(res.body)})
     console.log(res.body,'-------------------------res')
     return null
 }
