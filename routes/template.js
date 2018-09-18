@@ -10,15 +10,18 @@ router.post('/form', async(ctx, next) => {
     let wxcode = ctx.request.body.wxcode
     let formid = ctx.request.body.formid
     let openid = await wechat.getOpenid(code, wxcode)
-    console.log(code,wxcode,formid,openid,'------------------------------code')
-    await UserModel.update({openid: openid, code: code}, {
-        $addToSet: {
-            formIds: {
-                formid: formid,
-                createAt: Date.now()
-            }
-        }},{upsert: true}
-    )
+    console.log(code, wxcode, formid, openid, '------------------------------code')
+    if (openid) {
+        await UserModel.update({openid: openid, code: code}, {
+                $addToSet: {
+                    formIds: {
+                        formid: formid,
+                        createAt: Date.now()
+                    }
+                }
+            }, {upsert: true}
+        )
+    }
     ctx.body = {}
 });
 
@@ -31,10 +34,10 @@ router.get('/send', async(ctx, next) => {
     for (let user of users) {
         for (let formid of user.formIds) {
             if (Date.now() - formid.createAt < 7 * 24 * 1000) {
-                await wechat.sendTemplateMessage(code,templateCode, user.openid, formid.formid, page, values)
+                await wechat.sendTemplateMessage(code, templateCode, user.openid, formid.formid, page, values)
                 await UserModel.update({openid: user.openid, code: code}, {$pull: {formIds: {formid: formid}}})
                 break
-            }else{
+            } else {
                 await UserModel.update({openid: user.openid, code: code}, {$pull: {formIds: {formid: formid}}})
             }
         }
