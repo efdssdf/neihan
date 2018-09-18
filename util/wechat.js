@@ -6,8 +6,8 @@ const UserModel = require('../model/User');
 const request = require('superagent');
 
 async function getAccessToken(code) {
-    // let token = await mem.get('mp_access_token_' + code);
-    // if (!token) {
+    let token = await mem.get('mp_access_token_' + code);
+    if (!token) {
         let conf = weichat_conf[code];
         let url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + conf.appid + "&secret=" + conf.appsecret
         let res = await koa2Req(url)
@@ -15,9 +15,9 @@ async function getAccessToken(code) {
         token = data.access_token
         await mem.set('mp_access_token_' + code, token, (data.expires_in - 60))
         return token
-    // } else {
-    //     return token
-    // }
+    } else {
+        return token
+    }
 }
 
 async function getOpenid(code, wxcode) {
