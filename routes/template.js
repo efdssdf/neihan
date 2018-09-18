@@ -5,7 +5,7 @@ var UserModel = require('../model/User');
 
 router.prefix('/template');
 
-router.post('/openid', async(ctx, next) => {
+router.get('/openid', async(ctx, next) => {
     let code = ctx.request.body.code || "1"
     let wxcode = ctx.request.body.wxcode
     let openid = ""
