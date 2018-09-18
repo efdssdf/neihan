@@ -47,7 +47,7 @@ async function sendTemplateMessage(code, templateCode, openid, formid, page, val
     }
     console.log(data,'--------------------------data')
     // let res = await koa2Req.post({url: url, data: data})
-    request.post(url).query(data).end((err, res) => {console.log(res.body)})
+    let res = await request.post(url).send(data).end()
     console.log(res.body,'-------------------------res')
     return null
 }
